@@ -27,9 +27,9 @@
     "model": "catalog.product",
     "pk": 1,
     "fields": {
-      "name": "json",
+      "name": "Json",
       "description": "Хранение json-файла",
-      "image": "",
+      "image": "products/json.jpeg",
       "category": 1,
       "price_for_one": 100,
       "date_of_creation": "2023-12-18",
@@ -43,7 +43,7 @@
     "fields": {
       "name": "Модуль",
       "description": "Хранение модуля",
-      "image": "",
+      "image": "products/modul.webp",
       "category": 2,
       "price_for_one": 120,
       "date_of_creation": "2023-12-18",
@@ -57,7 +57,7 @@
     "fields": {
       "name": "Программа на месяц",
       "description": "Хранение программы",
-      "image": "",
+      "image": "products/program.png",
       "category": 3,
       "price_for_one": 144,
       "date_of_creation": "2023-12-18",
