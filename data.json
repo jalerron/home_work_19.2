@@ -1,68 +1,68 @@
 [
   {
-    "model": "catalog.product",
-    "pk": 1,
-    "fields": {
-      "name": "\u041c\u043e\u0434\u0443\u043b\u044c",
-      "description": "\u0425\u0440\u0430\u043d\u0435\u043d\u0438\u0435 \u043c\u043e\u0434\u0443\u043b\u044f",
-      "image": "",
-      "category": "\u041c\u043e\u0434\u0443\u043b\u044c",
-      "price_for_one": 90,
-      "date_of_creation": "2023-12-16",
-      "date_last_changes": "2023-12-16",
-      "is_active": true
-    }
-  },
-  {
-    "model": "catalog.product",
-    "pk": 2,
-    "fields": {
-      "name": "Json-\u0444\u0430\u0439\u043b",
-      "description": "\u0425\u0440\u0430\u043d\u0435\u043d\u0438\u0435 \u043e\u0434\u043d\u043e\u0433\u043e json-\u0444\u0430\u0439\u043b\u0430",
-      "image": "",
-      "category": "Json-file",
-      "price_for_one": 50,
-      "date_of_creation": "2023-12-16",
-      "date_last_changes": "2023-12-16",
-      "is_active": true
-    }
-  },
-  {
-    "model": "catalog.product",
-    "pk": 3,
-    "fields": {
-      "name": "\u041f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430",
-      "description": "\u041f\u043e\u043b\u043d\u043e\u0435 \u0445\u0440\u0430\u043d\u0435\u043d\u0438\u0435 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u044b \u043d\u0430 \u043c\u0435\u0441\u044f\u0446",
-      "image": "",
-      "category": "\u041f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430",
-      "price_for_one": 120,
-      "date_of_creation": "2023-12-16",
-      "date_last_changes": "2023-12-16",
-      "is_active": true
-    }
-  },
-  {
     "model": "catalog.category",
     "pk": 1,
     "fields": {
       "name": "Json-file",
-      "description": "\u0425\u0440\u0430\u043d\u0435\u043d\u0438\u0435 json-\u0444\u0430\u0439\u043b\u0430"
+      "description": "Хранение Json-файла"
     }
   },
   {
     "model": "catalog.category",
     "pk": 2,
     "fields": {
-      "name": "\u041c\u043e\u0434\u0443\u043b\u044c",
-      "description": "\u0425\u0440\u0430\u043d\u0435\u043d\u0438\u0435 \u043c\u043e\u0434\u0443\u043b\u044f"
+      "name": "Модуль",
+      "description": "Хранение модуля"
     }
   },
   {
     "model": "catalog.category",
     "pk": 3,
     "fields": {
-      "name": "\u041f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430",
-      "description": "\u0425\u0440\u0430\u043d\u0435\u043d\u0438\u0435 \u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u044b"
+      "name": "Программа",
+      "description": "Хранение программы"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Json",
+      "description": "Хранение json-файла",
+      "image": "products/json.jpeg",
+      "category": 1,
+      "price_for_one": 100,
+      "date_of_creation": "2023-12-18",
+      "date_last_changes": "2023-12-18",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Модуль",
+      "description": "Хранение модуля",
+      "image": "products/modul.webp",
+      "category": 2,
+      "price_for_one": 120,
+      "date_of_creation": "2023-12-18",
+      "date_last_changes": "2023-12-18",
+      "is_active": true
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Программа на месяц",
+      "description": "Хранение программы",
+      "image": "products/program.png",
+      "category": 3,
+      "price_for_one": 144,
+      "date_of_creation": "2023-12-18",
+      "date_last_changes": "2023-12-18",
+      "is_active": true
     }
   }
 ]
