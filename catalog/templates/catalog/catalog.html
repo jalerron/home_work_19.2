@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'catalog/base.html' %}
 {% load mediapath %}
 
 {% block content%}
@@ -6,11 +6,10 @@
     <h1 class="display-4">Каталог</h1>
 </div>
 
-
 <div class="row text-center">
     {% for object in object_list %}
     <div class="col-4">
-        <div class="card mb-4 box-shadow">
+        <div class="card mb-4 box-shadow" >
             <div class="card-header">
                 <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
             </div>
@@ -19,6 +18,7 @@
                 <p class="card-text">{{ object.description|slice:':100' }}</p>
                 <h1 class="text-center card-title pricing-card-title">{{ object.price_for_one }} $</h1>
                 <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                <a type="button" class="btn btn-lg btn_block btn-outline-secondary" href="{% url 'catalog:product_detail' product_id=object.pk %}">Подробнее</a>
             </div>
         </div>
     </div>

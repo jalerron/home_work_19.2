@@ -11,7 +11,7 @@ def catalog(request):
         'title': 'Каталог'
     }
 
-    return render(request, 'main/home.html', content)
+    return render(request, 'catalog/catalog.html', content)
 
 
 def index(request):
@@ -19,7 +19,7 @@ def index(request):
         'title_head': 'Skystore',
         'title': 'Skystore'
     }
-    return render(request, 'main/index.html', content)
+    return render(request, 'catalog/index.html', content)
 
 
 def contacts(request):
@@ -34,4 +34,23 @@ def contacts(request):
         'title': 'Контакты',
     }
 
-    return render(request, 'main/contacts.html', content)
+    return render(request, 'catalog/contacts.html', content)
+
+
+def product_detail(request, product_id):
+    products_list = Product.objects.get(pk=product_id)
+    content = {
+        'object': products_list,
+        'title_head': 'Skystore',
+        'title': 'Каталог'
+    }
+
+    return render(request, 'catalog/product_detail.html', content)
+
+# def view_product(request, pk):
+#     product_item = get_object_or_404(Product, pk=pk)
+#     context = {
+#         'object': product_item,
+#     }
+#
+#     return render(request, 'catalog/product_detail.html', context)
