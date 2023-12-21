@@ -15,7 +15,10 @@ def catalog(request):
 
 
 def index(request):
+
+    product_list = Product.objects.filter(is_active=True)
     content = {
+        'object_list': product_list,
         'title_head': 'Skystore',
         'title': 'Skystore'
     }
