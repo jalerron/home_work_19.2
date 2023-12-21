@@ -10,9 +10,20 @@
             <img src="{{ object.image|mediapath }}" width="70%" height="225"/>
             <p class="card-text">{{ object.description|slice:':100' }}</p>
             <h1 class="text-center card-title pricing-card-title">{{ object.price_for_one }} $</h1>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
-            <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
-               href="{% url 'catalog:product_detail' product_id=object.pk %}">Подробнее</a>
+            <!--            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>-->
+            <!--            <a type="button" class="btn btn-lg btn_block btn-outline-secondary"-->
+            <!--               href="{% url 'catalog:product_detail' product_id=object.pk %}">Подробнее</a>-->
+        </div>
+        <div class="card-footer ">
+            <div class="form-inline">
+                <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
+                   href="{% url 'catalog:product_detail' product_id=object.pk %}">Подробнее</a>
+                <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
+                   href="{% url 'catalog:product_detail' product_id=object.pk %}">Изменить</a>
+                <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
+                   href="{% url 'catalog:product_detail' product_id=object.pk %}">Удалить</a>
+            </div>
         </div>
     </div>
 </div>
