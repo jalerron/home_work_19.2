@@ -80,6 +80,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'skystore',
         'USER': 'jalerron',
+        'HOST': 'localhost',
+        'PORT': '5432',
         'PASSWORD': 'Swtbme666^^^'
     }
 }

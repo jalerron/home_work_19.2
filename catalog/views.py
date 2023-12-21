@@ -16,7 +16,7 @@ def catalog(request):
 
 def index(request):
 
-    product_list = Product.objects.filter(is_active=True)
+    product_list = Product.objects.filter(is_active=True)[:3]
     content = {
         'object_list': product_list,
         'title_head': 'Skystore',

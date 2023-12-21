@@ -26,6 +26,7 @@ class Product(models.Model):
     date_last_changes = models.DateField(verbose_name='дата последнего изменения')
 
     is_active = models.BooleanField(default=True, verbose_name='доступно')
+    is_new = models.BooleanField(default=True, verbose_name='новинка')
 
     def __str__(self):
         return f'{self.name}'
