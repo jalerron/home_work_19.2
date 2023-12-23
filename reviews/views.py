@@ -7,7 +7,7 @@ from reviews.models import Reviews
 
 class ReviewsCreateView(CreateView):
     model = Reviews
-    fields = ('name', 'body', 'product', 'date')
+    fields = ('name', 'body', 'product',)
     success_url = reverse_lazy('reviews:list_reviews')
 
 
