@@ -1,25 +1,26 @@
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 
 from catalog.models import Product
 
 
-def catalog(request):
-    products_list = Product.objects.all()
-    content = {
-        'object_list': products_list,
-        'title_head': 'Skystore',
-        'title': 'Каталог'
-    }
+class ProductListView(ListView):
+    model = Product
 
-    return render(request, 'main/home.html', content)
+
+class ProductDetailView(DetailView):
+    model = Product
 
 
 def index(request):
+
+    product_list = Product.objects.filter(is_new=True)[:3]
     content = {
+        'object_list': product_list,
         'title_head': 'Skystore',
         'title': 'Skystore'
     }
-    return render(request, 'main/index.html', content)
+    return render(request, 'catalog/index.html', content)
 
 
 def contacts(request):
@@ -34,4 +35,4 @@ def contacts(request):
         'title': 'Контакты',
     }
 
-    return render(request, 'main/contacts.html', content)
+    return render(request, 'catalog/contacts.html', content)

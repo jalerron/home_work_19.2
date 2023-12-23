@@ -1,0 +1,22 @@
+{% extends 'catalog/base.html' %}
+{% load mediapath %}
+{% block content%}
+
+<h1>{{ object.title }} ({{ object.slug }})</h1>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-12">
+            <div class="text-start">
+                <img src="{{ object.image|mediapath}}" width="70%" height="225"/>
+                <p>{{ object.slug }}</p>
+                <p class="card-text">{{ object.body }}</p>
+                <p class="text-start card-title pricing-card-title">{{ object.date }}</p>
+            </div>
+            <p>Количество просмотров: {{ object.count_view }}</p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

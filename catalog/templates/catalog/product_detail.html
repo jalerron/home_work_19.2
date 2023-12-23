@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+{% load mediapath %}
+
+{% block content%}
+
+<h1>{{ object.name }}</h1>
+
+<div class="container text-center">
+    <div class="row align-items-end">
+        <div class="col">
+            <img class="mg-thumbnail" src="{{ object.image|mediapath }}" width="70%" height="225"/>
+        </div>
+        <div class="col">
+            <p class="card-text">{{ object.description|slice:':100' }}</p>
+            <p class="card-text">{{ object.description|slice:':100' }}</p>
+            <p class="card-text">{{ object.description|slice:':100' }}</p>
+            <p class="card-text">{{ object.description|slice:':100' }}</p>
+        </div>
+        <div class="col align-self-center">
+            <h1 class="align-self-center card-title pricing-card-title">{{ object.price_for_one }} $</h1>
+            <button type="button" class="align-self-end btn btn-lg btn-block btn-outline-primary">Купить</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
