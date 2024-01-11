@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.utils.text import slugify
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from catalog.models import Product
 
@@ -12,8 +14,21 @@ class ProductDetailView(DetailView):
     model = Product
 
 
-def index(request):
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('__all__')
+    success_url = reverse_lazy('catalog:product_list')
 
+
+class ProductUpdateView(UpdateView):
+    model = Product
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+
+
+def index(request):
     product_list = Product.objects.filter(is_new=True)[:3]
     content = {
         'object_list': product_list,
