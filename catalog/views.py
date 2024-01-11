@@ -22,10 +22,13 @@ class ProductCreateView(CreateView):
 
 class ProductUpdateView(UpdateView):
     model = Product
+    fields = ('__all__')
+    success_url = reverse_lazy('catalog:product_list')
 
 
 class ProductDeleteView(DeleteView):
     model = Product
+    success_url = reverse_lazy('catalog:product_list')
 
 
 def index(request):
