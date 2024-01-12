@@ -5,6 +5,9 @@
     <div class="card mb-4">
         <div class="card-header">
             <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
+            {% if object.active_version_number %}
+            <p>Активная версия: {{ object.active_version_number }} - {{ object.active_version_name }}</p>
+            {% endif %}
         </div>
         <div class="card-body">
             <img src="{{ object.image|mediapath }}" width="70%" height="225"/>

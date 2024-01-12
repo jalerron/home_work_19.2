@@ -5,11 +5,27 @@ from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import ProductForm
-from catalog.models import Product
+from catalog.models import Product, Version
 
 
 class ProductListView(ListView):
     model = Product
+    context_object_name = 'object_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        for product in context['object_list']:
+            active_version = product.version_set.filter(is_active=True).first()
+
+            if active_version:
+                product.active_version_number = active_version.num_version
+                product.active_version_name = active_version.name
+            else:
+                product.active_version_number = None
+                product.active_version_name = None
+
+        return context
 
 
 class ProductDetailView(DetailView):
@@ -30,6 +46,11 @@ class ProductUpdateView(UpdateView):
 
 class ProductDeleteView(DeleteView):
     model = Product
+    success_url = reverse_lazy('catalog:product_list')
+
+
+class VersionCreateView(CreateView):
+    model = Version
     success_url = reverse_lazy('catalog:product_list')
 
 
