@@ -1,6 +1,6 @@
 from django import forms
 
-from catalog.models import Product, Category
+from catalog.models import Product, Category, Version
 
 LIST_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
@@ -35,3 +35,10 @@ class ProductForm(forms.ModelForm):
                 raise forms.ValidationError('Ошибка, связанная с описанием продукта')
 
         return cleaned_data
+
+
+class VersionForm(forms.ModelForm):
+    class Meta:
+        model = Version
+        fields = ('__all__')
+     

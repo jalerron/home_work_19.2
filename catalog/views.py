@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Version
 
 
@@ -51,6 +51,7 @@ class ProductDeleteView(DeleteView):
 
 class VersionCreateView(CreateView):
     model = Version
+    form_class = VersionForm
     success_url = reverse_lazy('catalog:product_list')
 
 
