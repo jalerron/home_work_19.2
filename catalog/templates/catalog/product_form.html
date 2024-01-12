@@ -1,5 +1,6 @@
 {% extends 'catalog/base.html' %}
 {% load mediapath %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="col-12">
@@ -9,7 +10,7 @@
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        {{ form|crispy }}
                         <button type="submit" class="btn btn-primary">
                             {% if object %}
                                 Сохранить

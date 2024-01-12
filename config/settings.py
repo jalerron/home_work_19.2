@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
 
     'catalog',
     'reviews',
@@ -137,3 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Crispy-forms
+# https://django-crispy-forms.readthedocs.io/en/latest/install.html
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

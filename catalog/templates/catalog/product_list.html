@@ -6,10 +6,12 @@
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Каталог</h1>
 </div>
+<div class="mb-3">
+    <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить продукт</a>
+</div>
 <div class="row">
-     <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить продукт</a>
-{% for object in object_list %}
-{% include 'catalog/includes/inc_cards.html' %}
-{% endfor %}
-{% endblock %}
+    {% for object in object_list %}
+    {% include 'catalog/includes/inc_cards.html' %}
+    {% endfor %}
+    {% endblock %}
 </div>
