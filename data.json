@@ -127,5 +127,18 @@
       "is_active": true,
       "is_new": false
     }
+  },
+  {
+    "model": "blogs.blogs",
+    "pk": 3,
+    "fields": {
+      "title": "123",
+      "slug": "123",
+      "body": "123124",
+      "image": "blogs/Image_created_with_a_mobile_phone.png",
+      "date": "2024-01-10T17:26:47.066Z",
+      "on_published": true,
+      "count_view": 0
+    }
   }
 ]
