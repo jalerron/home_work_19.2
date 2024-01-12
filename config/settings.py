@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
 
+    'users',
     'catalog',
     'reviews',
     'blogs'
@@ -142,3 +143,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Crispy-forms
 # https://django-crispy-forms.readthedocs.io/en/latest/install.html
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+AUTH_USER_MODEL = 'users.User'
