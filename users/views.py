@@ -1,9 +1,9 @@
-import uuid
 from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
+from django.shortcuts import render
 
 from django.urls import reverse_lazy
+from django.views import View
 
 from django.views.generic import CreateView
 
@@ -29,28 +29,11 @@ class RegisterView(CreateView):
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[new_user.email]
             )
-
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('catalog:product_list')
+        return reverse_lazy('users:verify_email')
 
-    # def form_valid(self, form):
-    #     request = super().form_valid(form)
-    #     user = form.save(commit=False)
-    #     user.is_active = False
-    #     user.save()
-    #
-    #     # Функционал для отправки письма и генерации токена
-    #     token = default_token_generator.make_token(user)
-    #     uid = urlsafe_base64_encode(force_bytes(user.pk))
-    #     activation_url = reverse_lazy('confirm_email', kwargs={'uidb64': uid, 'token': token})
-    #     current_site = get_current_site(request)
-    #     send_mail(
-    #         'Подтвердите свой электронный адрес',
-    #         f'Пожалуйста, перейдите по следующей ссылке, чтобы подтвердить свой адрес электронной почты: http://{current_site}{activation_url}',
-    #         'service.notehunter@gmail.com',
-    #         [user.email],
-    #         fail_silently=False,
-    #     )
-    #     return redirect('catalog:index')
+
+def verify_view(request):
+    return render(request, 'users/verify_email.html')
