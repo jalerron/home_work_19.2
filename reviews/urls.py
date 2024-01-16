@@ -7,7 +7,7 @@ app_name = ReviewsConfig.name
 
 urlpatterns = [
     path('create/', ReviewsCreateView.as_view(), name='create'),
-    path('', ReviewsListView.as_view(), name='list_reviews'),
+    path('reviews/<int:product_id>', ReviewsListView.as_view(), name='list_reviews'),
     path('review/<int:pk>', ReviewDetailView.as_view(), name='view_review'),
     path('edit/<int:pk>', ReviewUpdateView.as_view(), name='edit_review'),
     path('delete/<int:pk>', ReviewDeleteView.as_view(), name='delete_review'),

@@ -1,7 +1,8 @@
 asgiref
-Django
+Django==4.2
 sqlparse
 psycopg2-binary
 pillow
 ipython
 pytils
+django-crispy-forms

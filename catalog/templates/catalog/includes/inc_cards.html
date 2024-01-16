@@ -1,10 +1,13 @@
 {% load static %}
 
 {% load mediapath %}
-<div class="col-4">
-    <div class="card mb-4 box-shadow ">
+<div class="col-4 d-flex">
+    <div class="card mb-4">
         <div class="card-header">
             <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
+            {% if object.active_version_number %}
+            <p>Активная версия: {{ object.active_version_number }} - {{ object.active_version_name }}</p>
+            {% endif %}
         </div>
         <div class="card-body">
             <img src="{{ object.image|mediapath }}" width="70%" height="225"/>
@@ -16,6 +19,14 @@
                 <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
                 <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
                    href="{% url 'catalog:product_detail' object.pk %}">Подробнее</a>
+                {% if user.is_authenticated %}
+                <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
+                   href="{% url 'catalog:update_product' object.pk %}">Изменить</a>
+                <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
+                   href="{% url 'catalog:delete_product' object.pk %}">Удалить</a>
+                {% endif %}
+                <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
+                   href="{% url 'reviews:list_reviews' product_id=object.pk %}">Отзывы</a>
             </div>
         </div>
     </div>
