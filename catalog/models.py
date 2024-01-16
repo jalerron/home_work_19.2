@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -27,6 +28,8 @@ class Product(models.Model):
 
     is_active = models.BooleanField(default=True, verbose_name='доступно')
     is_new = models.BooleanField(default=True, verbose_name='новинка')
+
+    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE, verbose_name='пользователь')
 
     def __str__(self):
         return f'{self.name}'
