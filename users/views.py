@@ -1,4 +1,7 @@
+from random import random
+
 from django.conf import settings
+from django.contrib.auth.views import PasswordResetView
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.shortcuts import render
@@ -6,8 +9,8 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator as token_generator
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView
-from users.forms import UserRegisterForm
+from django.views.generic import CreateView, UpdateView
+from users.forms import UserRegisterForm, UserResetPasswordForm
 from users.models import User
 from users.utils import register_confirm
 
@@ -58,7 +61,44 @@ class EmailVerifyView(View):
 
             return render(request, 'users/verified_email.html')
         else:
-            return render(request, 'users/verify_email.html') #Доделать шаблон неверного подтверждения
+            return render(request, 'users/incorrect_verify.html')
+
+
+class UserPasswordResetView(CreateView):
+    model = User
+    form_class = UserResetPasswordForm
+    template_name = 'users/password_reset.html'
+    success_url = 'users/password_reset_complete.html'
+
+    def form_valid(self, form, *args, **kwargs):
+        email_user = form['email']['value']
+        pass_ = 'ASDqwe123'
+        print(email_user)
+        try:
+            user = User.objects.get(email=email_user)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist, ValidationError):
+            user = None
+        if user is not None:
+            send_mail(
+                subject="Сброс пароля",
+                message=f'Новый пароль: {pass_}',
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[user.email]
+            )
+            user.password = pass_
+            user.save()
+            render(self.request, 'users/password_reset_complete.html')
+
+        return super().form_valid(form)
+
+# def password_reset(request):
+
+
+
+
+# def reset_password_done(request):
+#
+#     return render(request, 'users/password_reset_complete.html')
 
 
 def verify_view(request):
