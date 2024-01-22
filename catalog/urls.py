@@ -4,7 +4,7 @@ from catalog.views import (
     index, contacts, ProductListView,
     ProductDetailView, ProductCreateView,
     ProductDeleteView, ProductUpdateView,
-    VersionCreateView
+    VersionCreateView, ProductMederationListView
 )
 from catalog.apps import CatalogConfig
 from reviews.views import ReviewsListView
@@ -13,6 +13,7 @@ app_name = CatalogConfig.name
 
 urlpatterns = [
     path('', index, name='index'),
+    path('moderation/', ProductMederationListView.as_view(), name='moderation_list'),
     path('catalog/', ProductListView.as_view(), name='product_list'),
     path('contacts/', contacts, name='contacts'),
     path('product_detail/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),

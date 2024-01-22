@@ -22,8 +22,10 @@
                 {% if user.is_authenticated %}
                 <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
                    href="{% url 'catalog:update_product' object.pk %}">Изменить</a>
+                {% if perms.catalog.delete_product %}
                 <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
                    href="{% url 'catalog:delete_product' object.pk %}">Удалить</a>
+                {% endif %}
                 {% endif %}
                 <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
                    href="{% url 'reviews:list_reviews' product_id=object.pk %}">Отзывы</a>

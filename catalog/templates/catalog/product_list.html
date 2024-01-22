@@ -8,8 +8,12 @@
 </div>
 <div class="mb-3">
     {% if user.is_authenticated %}
+    {% if perms.catalog.add_product %}
     <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}">Добавить продукт</a>   
+    {% endif %}
+    {% if perms.catalog.add_version %}
     <a class="btn btn-outline-primary" href="{% url 'catalog:create_version' %}">Добавить версию</a>
+    {% endif %}
     {% endif %}
 </div>
 <div class="row">

@@ -91,15 +91,6 @@ class UserPasswordResetView(CreateView):
 
         return super().form_valid(form)
 
-# def password_reset(request):
-
-
-
-
-# def reset_password_done(request):
-#
-#     return render(request, 'users/password_reset_complete.html')
-
 
 def verify_view(request):
     return render(request, 'users/verify_email.html')

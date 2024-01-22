@@ -16,7 +16,7 @@ LIST_WORDS = ['казино', 'криптовалюта', 'крипта', 'би�
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        exclude = ('user',)
+        exclude = ('user', 'is_active')
 
     def clean_name(self):
         cleaned_data = self.cleaned_data['name']
@@ -41,4 +41,10 @@ class VersionForm(forms.ModelForm):
     class Meta:
         model = Version
         fields = ('__all__')
-     
+
+
+class ModeratorProductForm(forms.ModelForm):
+    """ Форма для модератора Product """
+    class Meta:
+        model = Product
+        fields = ('category', 'description', 'is_active')

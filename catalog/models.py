@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from users.models import User
 
@@ -26,7 +27,7 @@ class Product(models.Model):
     date_of_creation = models.DateField(auto_now_add=True, verbose_name='дата создания')
     date_last_changes = models.DateField(auto_now_add=True, verbose_name='дата последнего изменения')
 
-    is_active = models.BooleanField(default=True, verbose_name='доступно')
+    is_active = models.BooleanField(default=False, verbose_name='доступно')
     is_new = models.BooleanField(default=True, verbose_name='новинка')
 
     user = models.ForeignKey(User, default=1, on_delete=models.CASCADE, verbose_name='пользователь')
@@ -38,6 +39,21 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
         ordering = ('name',)
+
+        permissions = [
+            (
+                'set_active',
+                'can publish post'
+            ),
+            (
+                'change_category_product',
+                'can change category product'
+            ),
+            (
+                'change_description_product',
+                'can change description product'
+            )
+        ]
 
 
 class Version(models.Model):

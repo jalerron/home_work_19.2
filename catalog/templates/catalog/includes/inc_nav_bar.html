@@ -11,6 +11,9 @@
             {% csrf_token %}
             <button class="p-2 btn btn-outline-primary" type="submit">Выйти</button>
         </form>
+        {% if perms.catalog.set_active and perms.catalog.change_category_product and perms.catalog.change_description_product %}
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:moderation_list' %}">Модерация</a>
+        {% endif %}
         {% else %}
         <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Войти</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
