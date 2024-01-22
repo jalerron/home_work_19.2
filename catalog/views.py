@@ -94,16 +94,16 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
             return ModeratorProductForm
         return ProductForm
 
-    def test_func(self):
-        _user = self.request.user
-        _instance: Product = self.get_object()
-
-        if _user == _instance.user:
-            _user.user_permissions.add(self.permission_required)
-            _user.save()
-        elif _user.groups.filter(name='manager') and _user.has_perms(self.permission_required):
-            return True
-        return self.handle_no_permission()
+    # def test_func(self):
+    #     _user = self.request.user
+    #     _instance: Product = self.get_object()
+    #
+    #     if _user == _instance.user:
+    #         _user.user_permissions.add(self.permission_required)
+    #         _user.save()
+    #     elif _user.groups.filter(name='manager') and _user.has_perms(self.permission_required):
+    #         return True
+    #     return self.handle_no_permission()
 
 
 class ProductDeleteView(PermissionRequiredMixin, DeleteView):
