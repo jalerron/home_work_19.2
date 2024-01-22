@@ -77,16 +77,11 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
     fields = ('name', 'description', 'image', 'category', 'price_for_one', 'is_active')
     success_url = reverse_lazy('catalog:product_list')
 
-    # permission_required = [
-    #     'catalog.change_category_product',
-    #     'catalog.change_description_product',
-    #     'catalog.set_active'
-    # ]
-
-    def get_form_class(self):
-        if self.request.user.is_staff and not (self.request.user.is_superuser and Product.user):
-            return ModeratorProductForm
-        return ProductForm
+    permission_required = [
+        'catalog.change_category_product',
+        'catalog.change_description_product',
+        'catalog.set_active'
+    ]
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -94,18 +89,19 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
             raise Http404("Вы не являетесь владельцем этого товара")
         return self.object
 
+    def get_form_class(self):
+        if self.request.user.is_staff and not (self.request.user.is_superuser and self.get_object().user):
+            return ModeratorProductForm
+        return ProductForm
+
     def test_func(self):
         _user = self.request.user
         _instance: Product = self.get_object()
-        custom_perms = (
-            'catalog.change_category_product',
-            'catalog.change_description_product',
-            'catalog.set_active',
-        )
 
         if _user == _instance.user:
-            return True
-        elif _user.groups.filter(name='moder') and _user.has_perms(custom_perms):
+            _user.user_permissions.add(self.permission_required)
+            _user.save()
+        elif _user.groups.filter(name='manager') and _user.has_perms(self.permission_required):
             return True
         return self.handle_no_permission()
 
