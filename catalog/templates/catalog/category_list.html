@@ -1,0 +1,23 @@
+{% extends 'catalog/base.html' %}
+{% load mediapath %}
+
+{% block content%}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Каталог</h1>
+</div>
+<div class="row">
+    {% for object in object_list %}
+    <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">{{ object.name }}</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title"><small>{{ object.description }}</small></h1>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endblock %}
+</div>

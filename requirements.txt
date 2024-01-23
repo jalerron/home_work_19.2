@@ -6,3 +6,5 @@ pillow
 ipython
 pytils
 django-crispy-forms==1.14.0
+redis
+python-dotenv

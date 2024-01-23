@@ -1,14 +1,16 @@
-
 from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import ProductForm, VersionForm, ModeratorProductForm
-from catalog.models import Product, Version
+from catalog.models import Product, Version, Category
+from catalog.services import get_category_cache
+from config import settings
 
 
 class ProductListView(ListView):
@@ -25,7 +27,6 @@ class ProductListView(ListView):
 
         for product in context['object_list']:
             active_version = product.version_set.filter(is_active=True).first()
-
             if active_version:
                 product.active_version_number = active_version.num_version
                 product.active_version_name = active_version.name
@@ -164,3 +165,16 @@ class ModeratorProductsView(LoginRequiredMixin, PermissionRequiredMixin, ListVie
         products = Product.objects.filter(user=self.request.user)
         queryset = products
         return queryset
+
+
+class CategoryListView(ListView):
+    model = Category
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        if settings.CACHE_ENABLED:
+            context_data['category_list'] = get_category_cache()
+            # print(context_data)
+        else:
+            context_data['category_list'] = Category.objects.all()
+        return context_data
