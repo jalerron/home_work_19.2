@@ -1,16 +1,16 @@
-from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from catalog.forms import ProductForm, VersionForm, ModeratorProductForm
+from catalog.forms import ProductForm, VersionForm, ModeratorProductForm, SuperModeratorProductForm, AdminProductForm
 from catalog.models import Product, Version, Category
 from catalog.services import get_category_cache
 from config import settings
+from users.models import User
 
 
 class ProductListView(ListView):
@@ -62,8 +62,8 @@ class ProductCreateView(PermissionRequiredMixin, CreateView):
         new_product = form.save()
         form.save()
         new_product.user = self.request.user
+        new_product.user.user_permissions.add(45, 46, 47)
         new_product.save()
-
         return super().form_valid(form)
 
     def get_object(self, *args, **kwargs):
@@ -75,19 +75,15 @@ class ProductCreateView(PermissionRequiredMixin, CreateView):
 
 class ProductUpdateView(PermissionRequiredMixin, UpdateView):
     model = Product
-    fields = ('name', 'description', 'image', 'category', 'price_for_one', 'is_active')
+    # fields = ('name', 'description', 'image', 'category', 'price_for_one', 'is_active')
+
     success_url = reverse_lazy('catalog:product_list')
 
-    # permission_required = [
-    #     'catalog.change_category_product',
-    #     'catalog.change_description_product',
-    #     'catalog.set_active'
-    # ]
-
-    def get_form_class(self):
-        if self.request.user.is_staff and not (self.request.user.is_superuser and Product.user):
-            return ModeratorProductForm
-        return ProductForm
+    permission_required = [
+        'catalog.change_category_product',
+        'catalog.change_description_product',
+        'catalog.set_active'
+    ]
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -95,20 +91,15 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
             raise Http404("Вы не являетесь владельцем этого товара")
         return self.object
 
-    def test_func(self):
-        _user = self.request.user
-        _instance: Product = self.get_object()
-        custom_perms = (
-            'catalog.change_category_product',
-            'catalog.change_description_product',
-            'catalog.set_active',
-        )
-
-        if _user == _instance.user:
-            return True
-        elif _user.groups.filter(name='moder') and _user.has_perms(custom_perms):
-            return True
-        return self.handle_no_permission()
+    def get_form_class(self):
+        if self.request.user.is_superuser:
+            return AdminProductForm
+        elif (self.request.user == self.get_object().user) and self.request.user.is_staff:
+            return SuperModeratorProductForm
+        elif (self.request.user == self.get_object().user) and not self.request.user.is_staff:
+            return ProductForm
+        else:
+            return ModeratorProductForm
 
 
 class ProductDeleteView(PermissionRequiredMixin, DeleteView):

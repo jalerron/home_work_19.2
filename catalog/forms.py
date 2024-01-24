@@ -47,4 +47,18 @@ class ModeratorProductForm(forms.ModelForm):
     """ Форма для модератора Product """
     class Meta:
         model = Product
-        fields = ('category', 'description', 'is_active')
+        fields = ('name', 'description', 'is_active')
+
+
+class AdminProductForm(forms.ModelForm):
+    """ Форма для модератора Product """
+    class Meta:
+        model = Product
+        fields = ('__all__')
+
+
+class SuperModeratorProductForm(forms.ModelForm):
+    """ Форма для модератора Product """
+    class Meta:
+        model = Product
+        exclude = ('user',)

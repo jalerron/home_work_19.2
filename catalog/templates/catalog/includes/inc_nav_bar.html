@@ -12,7 +12,7 @@
             {% csrf_token %}
             <button class="p-2 btn btn-outline-primary" type="submit">Выйти</button>
         </form>
-        {% if perms.catalog.set_active and perms.catalog.change_category_product and perms.catalog.change_description_product %}
+        {% if perms.catalog.set_active and perms.catalog.change_category_product and perms.catalog.change_description_product and user.is_staff%}
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:moderation_list' %}">Модерация</a>
         {% endif %}
         {% else %}

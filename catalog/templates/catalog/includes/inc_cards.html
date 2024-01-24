@@ -11,7 +11,6 @@
         </div>
         <div class="card-body">
             <img src="{{ object.image|mediapath }}" width="70%" height="225"/>
-            <p class="card-text">{{ categories }}</p>
             <p class="card-text">{{ object.description|slice:':100' }}</p>
             <h1 class="text-center card-title pricing-card-title">{{ object.price_for_one }} $</h1>
         </div>
@@ -21,8 +20,10 @@
                 <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
                    href="{% url 'catalog:product_detail' object.pk %}">Подробнее</a>
                 {% if user.is_authenticated %}
+                {% if perms.catalog.change_category_product and perms.catalog.change_description_product and perms.catalog.set_active and user.is_staff or object.user == user %}
                 <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
                    href="{% url 'catalog:update_product' object.pk %}">Изменить</a>
+                {% endif %}
                 {% if perms.catalog.delete_product %}
                 <a type="button" class="btn btn-lg btn_block btn-outline-secondary"
                    href="{% url 'catalog:delete_product' object.pk %}">Удалить</a>
