@@ -1,4 +1,6 @@
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -22,11 +24,13 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', verbose_name='изображение (превью)', **NULLABLE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='категория')
     price_for_one = models.IntegerField(verbose_name='цена за штуку')
-    date_of_creation = models.DateField(verbose_name='дата создания')
-    date_last_changes = models.DateField(verbose_name='дата последнего изменения')
+    date_of_creation = models.DateField(auto_now_add=True, verbose_name='дата создания')
+    date_last_changes = models.DateField(auto_now_add=True, verbose_name='дата последнего изменения')
 
-    is_active = models.BooleanField(default=True, verbose_name='доступно')
+    is_active = models.BooleanField(default=False, verbose_name='доступно')
     is_new = models.BooleanField(default=True, verbose_name='новинка')
+
+    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE, verbose_name='пользователь')
 
     def __str__(self):
         return f'{self.name}'
@@ -36,3 +40,32 @@ class Product(models.Model):
         verbose_name_plural = 'продукты'
         ordering = ('name',)
 
+        permissions = [
+            (
+                'set_active',
+                'can publish post'
+            ),
+            (
+                'change_category_product',
+                'can change category product'
+            ),
+            (
+                'change_description_product',
+                'can change description product'
+            )
+        ]
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='продукт')
+    num_version = models.IntegerField(verbose_name='номер версии')
+    name = models.CharField(max_length=60, verbose_name='наименование')
+    is_active = models.BooleanField(default=True, verbose_name='доступно')
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
+        ordering = ('name',)

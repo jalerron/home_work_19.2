@@ -14,6 +14,12 @@ class ReviewsCreateView(CreateView):
 class ReviewsListView(ListView):
     model = Reviews
 
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(**kwargs)
+        queryset = queryset.filter(product=self.kwargs.get('product_id'))
+
+        return queryset
+
 
 class ReviewDetailView(DetailView):
     model = Reviews
@@ -21,7 +27,7 @@ class ReviewDetailView(DetailView):
 
 class ReviewUpdateView(UpdateView):
     model = Reviews
-    fields = ('name', 'body', 'date')
+    fields = ('name', 'body',)
     success_url = reverse_lazy('reviews:list_reviews')
 
 
