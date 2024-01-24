@@ -13,7 +13,10 @@
             <button class="p-2 btn btn-outline-primary" type="submit">Выйти</button>
         </form>
         {% if perms.catalog.set_active and perms.catalog.change_category_product and perms.catalog.change_description_product and user.is_staff%}
-        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:moderation_list' %}">Модерация</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:moderation_list' %}">Модерация продуктов</a>
+        {% endif %}
+        {% if user.is_staff %}
+        <a class="p-2 btn btn-outline-primary" href="{% url 'blogs:moderation_list' %}">Модерация Блогов></a>
         {% endif %}
         {% else %}
         <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Войти</a>
