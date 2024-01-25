@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -8,7 +9,7 @@ from blogs.forms import ModeratorBlogForm, ModeratorOwnerBlogForm, AdminBlogForm
 from blogs.models import Blogs
 
 
-class BlogsListView(ListView):
+class BlogsListView(LoginRequiredMixin, ListView):
     model = Blogs
 
     def get_queryset(self, *args, **kwargs):
@@ -18,7 +19,7 @@ class BlogsListView(ListView):
         return queryset
 
 
-class BlogsModerationList(ListView):
+class BlogsModerationList(LoginRequiredMixin, ListView):
     model = Blogs
 
     def get_queryset(self, *args, **kwargs):
@@ -27,7 +28,7 @@ class BlogsModerationList(ListView):
         return queryset
 
 
-class BlogsCreateView(CreateView):
+class BlogsCreateView(LoginRequiredMixin, CreateView):
     model = Blogs
     fields = ('title', 'body', 'image',)
     success_url = reverse_lazy('blogs:list')
@@ -42,7 +43,7 @@ class BlogsCreateView(CreateView):
         return super().form_valid(form)
 
 
-class BlogsDetailView(DetailView):
+class BlogsDetailView(LoginRequiredMixin, DetailView):
     model = Blogs
 
     def get_object(self, queryset=None, *args, **kwargs):
@@ -53,7 +54,7 @@ class BlogsDetailView(DetailView):
         return self.object
 
 
-class BlogsUpdateView(UpdateView):
+class BlogsUpdateView(LoginRequiredMixin, UpdateView):
     model = Blogs
 
     def form_valid(self, form):
@@ -87,7 +88,7 @@ class BlogsUpdateView(UpdateView):
         return reverse('blogs:view_blog', args=[self.kwargs.get('pk')])
 
 
-class BlogsDeleteView(DeleteView):
+class BlogsDeleteView(LoginRequiredMixin, DeleteView):
     model = Blogs
     success_url = reverse_lazy('blogs:list')
 
