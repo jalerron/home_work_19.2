@@ -13,7 +13,7 @@ from config import settings
 from users.models import User
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'object_list'
 
@@ -37,7 +37,7 @@ class ProductListView(ListView):
         return context
 
 
-class ProductMederationListView(ListView):
+class ProductMederationListView(LoginRequiredMixin, ListView):
     model = Product
     context_object_name = 'object_list'
 
@@ -47,12 +47,11 @@ class ProductMederationListView(ListView):
         return queryset
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
 
 
-@method_decorator(login_required(login_url='users:register'), name='dispatch')
-class ProductCreateView(PermissionRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product_list')
@@ -73,7 +72,7 @@ class ProductCreateView(PermissionRequiredMixin, CreateView):
         return reverse('catalog:product_list')
 
 
-class ProductUpdateView(PermissionRequiredMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     # fields = ('name', 'description', 'image', 'category', 'price_for_one', 'is_active')
 
@@ -102,19 +101,19 @@ class ProductUpdateView(PermissionRequiredMixin, UpdateView):
             return ModeratorProductForm
 
 
-class ProductDeleteView(PermissionRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:product_list')
     permission_required = 'catalog.delete_product'
 
 
-class VersionCreateView(PermissionRequiredMixin, CreateView):
+class VersionCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Version
     form_class = VersionForm
     success_url = reverse_lazy('catalog:product_list')
     permission_required = 'catalog.add_version'
 
-
+@login_required
 def index(request):
     product_list = Product.objects.filter(is_new=True, is_active=True)[:3]
     content = {
@@ -125,6 +124,7 @@ def index(request):
     return render(request, 'catalog/index.html', content)
 
 
+@login_required
 def contacts(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -158,7 +158,7 @@ class ModeratorProductsView(LoginRequiredMixin, PermissionRequiredMixin, ListVie
         return queryset
 
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
 
     def get_context_data(self, *args, **kwargs):
